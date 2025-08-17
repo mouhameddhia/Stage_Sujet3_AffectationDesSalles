@@ -78,63 +78,6 @@ npm start
 
 L'application sera accessible sur `http://localhost:3000`
 
-## 📁 Structure du Projet
-
-```
-Frontend
-
-src/
-├── components/
-│   ├── affectations/          # Composants de gestion des affectations
-│   ├── auth/                  # Composants d'authentification
-│   ├── common/                # Composants réutilisables
-│   ├── layout/                # Composants de mise en page
-│   └── profile/               # Composants de profil utilisateur
-├── context/                   # Contextes React (Auth, etc.)
-├── hooks/                     # Hooks personnalisés
-├── pages/                     # Pages principales de l'application
-├── services/                  # Services API
-├── styles/                    # Styles CSS
-└── utils/                     # Utilitaires et helpers
-```
-Backend
-
-src/main/java/affectationsDesSalles/affectationDesSalles/
-├── config/
-│   └── SecurityConfig.java              # Spring Security configuration
-├── controller/
-│   ├── AuthController.java              # Authentication endpoints
-│   ├── UserController.java              # User CRUD endpoints
-│   ├── SalleController.java             # Room CRUD endpoints
-│   ├── AffectationController.java       # Assignment CRUD endpoints
-│   └── SmartRecommendationController.java # AI recommendations
-├── dto/
-│   ├── AuthResponse.java                # Authentication response DTO
-│   ├── LoginRequest.java                # Login request DTO
-│   ├── SignupRequest.java               # Signup request DTO
-│   ├── SmartRecommendationRequest.java  # AI recommendation request
-│   └── SmartRecommendationResponse.java # AI recommendation response
-├── model/
-│   ├── User.java                        # User entity
-│   ├── Salle.java                       # Room entity
-│   ├── Affectation.java                 # Assignment entity
-│   ├── Bloc.java                        # Building entity
-│   └── Etage.java                       # Floor entity
-├── repository/
-│   ├── UserRepository.java              # User data access
-│   ├── SalleRepository.java             # Room data access
-│   └── AffectationRepository.java       # Assignment data access
-├── security/
-│   ├── JwtAuthenticationFilter.java     # JWT authentication filter
-│   └── JwtUtil.java                     # JWT utility functions
-└── service/
-    ├── AuthService.java                 # Authentication service
-    ├── UserService.java                 # User service
-    ├── SalleService.java                # Room service
-    ├── AffectationService.java          # Assignment service
-    ├── GeminiApiService.java            # AI service interface
-    └── GeminiApiServiceImpl.java        # AI service implementation
-```
 ## 🎨 Interface Utilisateur
 
 ### **Vue Calendrier**
