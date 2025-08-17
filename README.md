@@ -191,17 +191,6 @@ src/
 4. Pull Request avec description détaillée
 5. Revue et merge
 
-## 📞 Support
-
-Pour toute question ou problème :
-- Créer une issue sur GitHub
-- Consulter la documentation technique
-- Contacter l'équipe de développement
-
-## 📄 Licence
-
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
-
 ---
 
 **Développé avec ❤️ pour simplifier la gestion des salles d'enseignement**
