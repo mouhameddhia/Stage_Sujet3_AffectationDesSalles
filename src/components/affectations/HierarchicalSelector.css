@@ -1,0 +1,271 @@
+/* ===== HIERARCHICAL SELECTOR ===== */
+.hierarchical-selector {
+  width: 100%;
+}
+
+.hierarchical-selector .MuiFormControl-root {
+  margin-bottom: 16px;
+}
+
+.hierarchical-selector .MuiFormControl-root:last-child {
+  margin-bottom: 0;
+}
+
+.hierarchical-selector .MuiSelect-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hierarchical-selector .MuiMenuItem-root {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+}
+
+.hierarchical-selector .MuiMenuItem-root:hover {
+  background-color: rgba(102, 126, 234, 0.08);
+}
+
+.hierarchical-selector .MuiMenuItem-root.Mui-selected {
+  background-color: rgba(102, 126, 234, 0.12);
+}
+
+.hierarchical-selector .MuiMenuItem-root.Mui-selected:hover {
+  background-color: rgba(102, 126, 234, 0.16);
+}
+
+/* ===== SELECTION SUMMARY ===== */
+.selection-summary {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  transition: all 0.2s ease;
+}
+
+.selection-summary:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.selection-summary .summary-title {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+}
+
+.selection-summary .summary-content {
+  font-weight: 500;
+  color: #212529;
+  font-size: 1rem;
+}
+
+.selection-summary .summary-chips {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+/* ===== LOADING STATES ===== */
+.hierarchical-selector .loading-indicator {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.hierarchical-selector .MuiFormControl-root:has(.loading-indicator) .MuiSelect-select {
+  padding-right: 40px;
+}
+
+/* ===== DISABLED STATES ===== */
+.hierarchical-selector .MuiFormControl-root.Mui-disabled {
+  opacity: 0.6;
+}
+
+.hierarchical-selector .MuiFormControl-root.Mui-disabled .MuiInputLabel-root {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+.hierarchical-selector .MuiFormControl-root.Mui-disabled .MuiSelect-select {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .hierarchical-selector .MuiFormControl-root {
+    margin-bottom: 12px;
+  }
+  
+  .hierarchical-selector .MuiMenuItem-root {
+    padding: 8px 12px;
+    font-size: 0.875rem;
+  }
+  
+  .selection-summary {
+    padding: 12px;
+    margin-top: 12px;
+  }
+  
+  .selection-summary .summary-content {
+    font-size: 0.875rem;
+  }
+  
+  .selection-summary .summary-chips {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hierarchical-selector .MuiMenuItem-root {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+  
+  .selection-summary {
+    padding: 8px;
+  }
+  
+  .selection-summary .summary-title {
+    font-size: 0.8rem;
+  }
+  
+  .selection-summary .summary-content {
+    font-size: 0.8rem;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hierarchical-selector .MuiFormControl-root {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.hierarchical-selector .MuiFormControl-root:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.hierarchical-selector .MuiFormControl-root:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.hierarchical-selector .MuiFormControl-root:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+.hierarchical-selector .MuiSelect-select::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hierarchical-selector .MuiSelect-select::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.hierarchical-selector .MuiSelect-select::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.hierarchical-selector .MuiSelect-select::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* ===== FOCUS STATES ===== */
+.hierarchical-selector .MuiFormControl-root .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #667eea;
+  border-width: 2px;
+}
+
+.hierarchical-selector .MuiFormControl-root .Mui-focused .MuiInputLabel-root {
+  color: #667eea;
+}
+
+/* ===== ERROR STATES ===== */
+.hierarchical-selector .MuiFormControl-root.Mui-error .MuiOutlinedInput-notchedOutline {
+  border-color: #d32f2f;
+}
+
+.hierarchical-selector .MuiFormControl-root.Mui-error .MuiInputLabel-root {
+  color: #d32f2f;
+}
+
+.hierarchical-selector .MuiFormControl-root.Mui-error .MuiSelect-select {
+  color: #d32f2f;
+}
+
+/* ===== SUCCESS STATES ===== */
+.hierarchical-selector .MuiFormControl-root.Mui-success .MuiOutlinedInput-notchedOutline {
+  border-color: #2e7d32;
+}
+
+.hierarchical-selector .MuiFormControl-root.Mui-success .MuiInputLabel-root {
+  color: #2e7d32;
+}
+
+/* ===== ICON STYLES ===== */
+.hierarchical-selector .MuiInputLabel-root .MuiBox-root {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hierarchical-selector .MuiInputLabel-root .MuiSvgIcon-root {
+  font-size: 1.1em;
+}
+
+/* ===== CHIP STYLES ===== */
+.hierarchical-selector .MuiChip-root {
+  height: 20px;
+  font-size: 0.7rem;
+}
+
+.hierarchical-selector .MuiChip-root .MuiChip-label {
+  padding: 0 6px;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.hierarchical-selector .text-center {
+  text-align: center;
+}
+
+.hierarchical-selector .text-muted {
+  color: #6c757d;
+}
+
+.hierarchical-selector .font-weight-bold {
+  font-weight: 600;
+}
+
+.hierarchical-selector .border-radius {
+  border-radius: 8px;
+}
+
+.hierarchical-selector .shadow-sm {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.hierarchical-selector .shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hierarchical-selector .shadow-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,218 @@
+/* AffectationDetails.css */
+
+.affectation-details {
+  /* Styles spécifiques au composant si nécessaire */
+}
+
+.affectation-details .MuiDialog-paper {
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.affectation-details .MuiDialogTitle-root {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 24px 24px 16px 24px;
+}
+
+.affectation-details .MuiDialogContent-root {
+  padding: 24px;
+}
+
+.affectation-details .MuiDialogActions-root {
+  padding: 16px 24px 24px 24px;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Styles pour les cartes d'information */
+.affectation-details .MuiCard-root {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+}
+
+.affectation-details .MuiCard-root:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.affectation-details .MuiCardContent-root {
+  padding: 20px;
+}
+
+/* Styles pour les icônes */
+.affectation-details .MuiSvgIcon-root {
+  font-size: 1.2rem;
+}
+
+/* Styles pour les chips de statut */
+.affectation-details .MuiChip-root {
+  font-weight: 500;
+  border-radius: 16px;
+}
+
+/* Styles pour les boutons d'action */
+.affectation-details .MuiButton-root {
+  text-transform: none;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+
+.affectation-details .MuiButton-outlined {
+  border-width: 2px;
+}
+
+.affectation-details .MuiButton-outlined:hover {
+  border-width: 2px;
+}
+
+/* Styles pour l'avatar */
+.affectation-details .MuiAvatar-root {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles pour les informations */
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.info-item .MuiSvgIcon-root {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.info-item .MuiTypography-root {
+  flex: 1;
+}
+
+/* Styles pour les séparateurs */
+.affectation-details .MuiDivider-root {
+  margin: 16px 0;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .affectation-details .MuiDialog-paper {
+    margin: 16px;
+    width: calc(100% - 32px);
+  }
+  
+  .affectation-details .MuiDialogContent-root {
+    padding: 16px;
+  }
+  
+  .affectation-details .MuiDialogActions-root {
+    padding: 12px 16px 16px 16px;
+  }
+  
+  .affectation-details .MuiCardContent-root {
+    padding: 16px;
+  }
+  
+  .affectation-details .MuiTypography-h5 {
+    font-size: 1.25rem;
+  }
+  
+  .affectation-details .MuiTypography-h6 {
+    font-size: 1rem;
+  }
+}
+
+/* Animation d'entrée */
+.affectation-details .MuiDialog-paper {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Styles pour les états de statut */
+.status-chip.planifie {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-chip.en_cours {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.status-chip.termine {
+  background-color: #e8f5e8;
+  color: #388e3c;
+}
+
+.status-chip.annule {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+/* Styles pour les actions */
+.actions-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.actions-section .MuiButton-root {
+  margin-left: 8px;
+}
+
+/* Styles pour les informations de salle */
+.salle-info {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px 0;
+}
+
+.salle-info .MuiTypography-root {
+  margin-bottom: 4px;
+}
+
+/* Styles pour la description */
+.description-section {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px 0;
+}
+
+.description-section .MuiTypography-root {
+  line-height: 1.6;
+}
+
+/* Styles pour les horaires */
+.time-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.time-info .time-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Styles pour l'ID */
+.event-id {
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  color: #666;
+  background-color: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+} 

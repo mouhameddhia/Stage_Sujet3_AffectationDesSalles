@@ -1,0 +1,57 @@
+/* Navbar specific styles */
+.navbar-appbar {
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-appbar .MuiToolbar-root {
+  min-height: 70px;
+}
+
+/* Logo/Title hover effect */
+.navbar-logo {
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Navigation button hover effects */
+.navbar-nav-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar-nav-button:hover {
+  transform: translateY(-2px);
+}
+
+/* User avatar hover effects */
+.navbar-user-avatar {
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar-user-avatar:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile menu button */
+.navbar-mobile-menu-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar-mobile-menu-button:hover {
+  transform: rotate(90deg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .navbar-appbar .MuiToolbar-root {
+    min-height: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar-appbar .MuiToolbar-root {
+    min-height: 56px;
+  }
+}

@@ -1,0 +1,45 @@
+/* Sidebar specific styles */
+.sidebar-drawer {
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-drawer .MuiDrawer-paper {
+  border: none;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Active menu item highlight */
+.sidebar-menu-item.active {
+  background-color: rgba(102, 126, 234, 0.1) !important;
+  color: #667eea !important;
+}
+
+.sidebar-menu-item.active .MuiListItemIcon-root {
+  color: #667eea !important;
+}
+
+/* Hover effects */
+.sidebar-menu-item:hover {
+  background-color: rgba(102, 126, 234, 0.05) !important;
+}
+
+/* User info section */
+.sidebar-user-info {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  padding-top: 16px;
+  margin-top: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .sidebar-drawer .MuiDrawer-paper {
+    width: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar-drawer .MuiDrawer-paper {
+    width: 100%;
+    max-width: 280px;
+  }
+}
