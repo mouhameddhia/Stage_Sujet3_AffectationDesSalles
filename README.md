@@ -1,17 +1,62 @@
-# Affectation des Salles - Spring Boot Backend
+# 🏢 Affectation des Salles - Intelligent Room Assignment System
 
-A Spring Boot application for managing room assignments with JWT-based authentication.
+[![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://openjdk.java.net/projects/jdk/17/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.3-green.svg)](https://spring.io/projects/spring-boot)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13+-blue.svg)](https://www.postgresql.org/)
+[![JWT](https://img.shields.io/badge/JWT-Authentication-yellow.svg)](https://jwt.io/)
+[![AI Powered](https://img.shields.io/badge/AI-Gemini%20API-purple.svg)](https://ai.google.dev/)
 
-## Features
+A comprehensive Spring Boot application for intelligent room assignment management with AI-powered recommendations using Google's Gemini API. This system provides smart suggestions for room bookings, conflict resolution, and automated scheduling optimization.
 
-- **User Management**: Complete CRUD operations for users with role-based access
-- **Room Management**: Complete CRUD operations for rooms (salles)
-- **Assignment Management**: Complete CRUD operations for room assignments (affectations)
+## 🚀 Features
+
+### Core Functionality
+- **User Management**: Complete CRUD operations with role-based access control
+- **Room Management**: Comprehensive room (salle) management with hierarchical structure
+- **Assignment Management**: Intelligent room assignment with conflict detection
 - **JWT Authentication**: Secure authentication with JWT tokens
-- **Password Security**: BCrypt password hashing
-- **CORS Support**: Cross-origin resource sharing enabled for frontend integration
+- **Password Security**: BCrypt password hashing for enhanced security
 
-## Project Structure
+### 🤖 AI-Powered Smart Recommendations
+- **Intelligent Room Suggestions**: AI-driven recommendations using Google Gemini API
+- **Conflict Resolution**: Automatic detection and resolution of booking conflicts
+- **Smart Scheduling**: Optimal time slot suggestions with detailed reasoning
+- **Form Assistance**: AI-powered form filling suggestions and validation
+- **Multi-criteria Analysis**: Advanced scoring system based on capacity, location, and availability
+
+### Advanced Features
+- **Hierarchical Room Structure**: Support for buildings, floors, and room types
+- **Flexible Scheduling**: Configurable time slots with margin handling
+- **Real-time Availability**: Live conflict detection and resolution
+- **CORS Support**: Cross-origin resource sharing for frontend integration
+- **Comprehensive API**: RESTful endpoints with detailed documentation
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Frontend (React/Angular)                │
+└─────────────────────┬───────────────────────────────────────┘
+                       │
+┌─────────────────────▼───────────────────────────────────────┐
+│                    Spring Boot Backend                      │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐ │
+│  │   Controllers   │  │     Services    │  │ Repositories │ │
+│  └─────────────────┘  └─────────────────┘  └──────────────┘ │
+└─────────────────────┬───────────────────────────────────────┘
+                       │
+┌─────────────────────▼───────────────────────────────────────┐
+│                    Gemini AI API                            │
+│              (Smart Recommendations)                        │
+└─────────────────────┬───────────────────────────────────────┘
+                       │
+┌─────────────────────▼───────────────────────────────────────┐
+│                    PostgreSQL Database                      │
+│              (Hierarchical Room Structure)                  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## 📁 Project Structure
 
 ```
 src/main/java/affectationsDesSalles/affectationDesSalles/
@@ -21,15 +66,20 @@ src/main/java/affectationsDesSalles/affectationDesSalles/
 │   ├── AuthController.java              # Authentication endpoints
 │   ├── UserController.java              # User CRUD endpoints
 │   ├── SalleController.java             # Room CRUD endpoints
-│   └── AffectationController.java       # Assignment CRUD endpoints
+│   ├── AffectationController.java       # Assignment CRUD endpoints
+│   └── SmartRecommendationController.java # AI recommendations
 ├── dto/
 │   ├── AuthResponse.java                # Authentication response DTO
 │   ├── LoginRequest.java                # Login request DTO
-│   └── SignupRequest.java               # Signup request DTO
+│   ├── SignupRequest.java               # Signup request DTO
+│   ├── SmartRecommendationRequest.java  # AI recommendation request
+│   └── SmartRecommendationResponse.java # AI recommendation response
 ├── model/
 │   ├── User.java                        # User entity
 │   ├── Salle.java                       # Room entity
-│   └── Affectation.java                 # Assignment entity
+│   ├── Affectation.java                 # Assignment entity
+│   ├── Bloc.java                        # Building entity
+│   └── Etage.java                       # Floor entity
 ├── repository/
 │   ├── UserRepository.java              # User data access
 │   ├── SalleRepository.java             # Room data access
@@ -38,236 +88,283 @@ src/main/java/affectationsDesSalles/affectationDesSalles/
 │   ├── JwtAuthenticationFilter.java     # JWT authentication filter
 │   └── JwtUtil.java                     # JWT utility functions
 └── service/
-    ├── AuthService.java                 # Authentication service interface
-    ├── AuthServiceImpl.java             # Authentication service implementation
-    ├── UserService.java                 # User service interface
-    ├── UserServiceImpl.java             # User service implementation
-    ├── SalleService.java                # Room service interface
-    ├── SalleServiceImpl.java            # Room service implementation
-    ├── AffectationService.java          # Assignment service interface
-    └── AffectationServiceImpl.java      # Assignment service implementation
+    ├── AuthService.java                 # Authentication service
+    ├── UserService.java                 # User service
+    ├── SalleService.java                # Room service
+    ├── AffectationService.java          # Assignment service
+    ├── GeminiApiService.java            # AI service interface
+    └── GeminiApiServiceImpl.java        # AI service implementation
 ```
 
-## Database Configuration
+## 🗄️ Database Schema
 
-### PostgreSQL Setup
+### Hierarchical Structure
+```sql
+-- Buildings (Blocs)
+CREATE TABLE bloc (
+    id_bloc SERIAL PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    description TEXT
+);
 
-The application uses PostgreSQL with the following configuration:
+-- Floors (Étages)
+CREATE TABLE etage (
+    id_etage SERIAL PRIMARY KEY,
+    numero INTEGER NOT NULL,
+    id_bloc INTEGER REFERENCES bloc(id_bloc),
+    description TEXT
+);
 
+-- Rooms (Salles)
+CREATE TABLE salle (
+    id_salle SERIAL PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    capacite INTEGER NOT NULL,
+    type VARCHAR(100) NOT NULL,
+    id_etage INTEGER REFERENCES etage(id_etage),
+    accessibilite BOOLEAN DEFAULT false,
+    equipements TEXT[]
+);
+
+-- Users
+CREATE TABLE "user" (
+    id_user SERIAL PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    mot_de_passe VARCHAR(255) NOT NULL,
+    role VARCHAR(50) DEFAULT 'user'
+);
+
+-- Assignments (Affectations)
+CREATE TABLE affectation (
+    id_affectation SERIAL PRIMARY KEY,
+    date DATE NOT NULL,
+    heure_debut TIME NOT NULL,
+    heure_fin TIME NOT NULL,
+    type_activite VARCHAR(255) NOT NULL,
+    id_salle INTEGER REFERENCES salle(id_salle),
+    id_user INTEGER REFERENCES "user"(id_user),
+    description TEXT,
+    statut VARCHAR(50) DEFAULT 'active'
+);
+```
+
+## 🔧 Configuration
+
+### Environment Variables
 ```properties
+# Database Configuration
 spring.datasource.url=jdbc:postgresql://localhost:5432/affectation_salles
 spring.datasource.username=postgres
-spring.datasource.password=0000
+spring.datasource.password=your_password
+
+# JWT Configuration
+jwt.secret=your_secret_key_here_make_it_long_and_secure_for_production_use
+jwt.expiration=86400000
+
+# Gemini AI Configuration
+gemini.api.key=${GEMINI_API_KEY:your_api_key_here}
+gemini.api.base-url=https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent
+gemini.api.timeout=30000
+
+# Application Configuration
+server.port=8080
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
 ```
 
-### Database Tables
+## 🚀 Quick Start
 
-#### User Table
-```sql
-CREATE TABLE "user" (
-    "idUser" SERIAL PRIMARY KEY,
-    nom VARCHAR(255),
-    email VARCHAR(255) UNIQUE,
-    "motDePasse" VARCHAR(255),
-    role VARCHAR(50)
-);
-```
+### Prerequisites
+- Java 17 or higher
+- PostgreSQL 13+
+- Gradle 7+
+- Google Gemini API key (for AI features)
 
-#### Salle Table
-```sql
-CREATE TABLE salle (
-    "idSalle" SERIAL PRIMARY KEY,
-    nom VARCHAR(255),
-    capacite INTEGER,
-    type VARCHAR(100)
-);
-```
+### Installation
 
-#### Affectation Table
-```sql
-CREATE TABLE affectation (
-    idaffectation SERIAL PRIMARY KEY,
-    date DATE,
-    heuredebut TIME,
-    heurefin TIME,
-    typeactivite VARCHAR(255),
-    idsalle INTEGER REFERENCES salle("idSalle")
-);
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/affectation-des-salles.git
+   cd affectation-des-salles
+   ```
 
-## Authentication System
+2. **Set up the database**
+   ```bash
+   # Create PostgreSQL database
+   createdb affectation_salles
+   
+   # Or use the provided SQL scripts
+   psql -d affectation_salles -f database/schema.sql
+   ```
 
-### JWT Configuration
+3. **Configure environment variables**
+   ```bash
+   # Set your Gemini API key
+   export GEMINI_API_KEY=your_api_key_here
+   
+   # Or add to application.properties
+   ```
 
-The application uses JWT tokens for authentication with the following configuration:
+4. **Run the application**
+   ```bash
+   ./gradlew bootRun
+   ```
 
-```properties
-jwt.secret=yourSecretKeyHereMakeItLongAndSecureForProductionUse
-jwt.expiration=86400000  # 24 hours in milliseconds
-```
+5. **Test the application**
+   ```bash
+   # Test database connection
+   curl http://localhost:8080/api/salles/test
+   
+   # Test AI recommendations
+   curl http://localhost:8080/api/smart-recommendations/health
+   ```
 
-### Authentication Endpoints
+## 📡 API Endpoints
 
-#### 1. User Registration
-- **Endpoint**: `POST /api/auth/signup`
-- **Request Body**:
-```json
-{
-    "nom": "John Doe",
-    "email": "john.doe@example.com",
-    "motDePasse": "password123",
-    "role": "user"
-}
-```
-- **Response**:
-```json
-{
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "nom": "John Doe",
-    "email": "john.doe@example.com",
-    "role": "user",
-    "idUser": 1
-}
-```
-
-#### 2. User Login
-- **Endpoint**: `POST /api/auth/login`
-- **Request Body**:
-```json
-{
-    "email": "john.doe@example.com",
-    "motDePasse": "password123"
-}
-```
-- **Response**:
-```json
-{
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "nom": "John Doe",
-    "email": "john.doe@example.com",
-    "role": "user",
-    "idUser": 1
-}
-```
-
-### Using JWT Tokens
-
-For authenticated requests, include the JWT token in the Authorization header:
-
-```
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-```
-
-## API Endpoints
-
-### Public Endpoints (No Authentication Required)
+### Authentication
 - `POST /api/auth/signup` - User registration
 - `POST /api/auth/login` - User login
 - `GET /api/auth/test` - Authentication test
-- `GET /api/salles/test` - Database connection test
 
-### Protected Endpoints (Authentication Required)
-
-#### User Management
+### User Management
 - `GET /api/users` - Get all users
 - `GET /api/users/{id}` - Get user by ID
 - `POST /api/users` - Create user
 - `PUT /api/users/{id}` - Update user
 - `DELETE /api/users/{id}` - Delete user
 
-#### Room Management
+### Room Management
 - `GET /api/salles` - Get all rooms
 - `GET /api/salles/{id}` - Get room by ID
 - `POST /api/salles` - Create room
 - `PUT /api/salles/{id}` - Update room
 - `DELETE /api/salles/{id}` - Delete room
 
-#### Assignment Management
+### Assignment Management
 - `GET /api/affectations` - Get all assignments
 - `GET /api/affectations/{id}` - Get assignment by ID
 - `POST /api/affectations` - Create assignment
 - `PUT /api/affectations/{id}` - Update assignment
 - `DELETE /api/affectations/{id}` - Delete assignment
 
-## Example Requests
+### 🤖 AI-Powered Smart Recommendations
+- `POST /api/smart-recommendations/rooms` - Get intelligent room recommendations
+- `POST /api/smart-recommendations/conflict-resolution` - Resolve booking conflicts
+- `POST /api/smart-recommendations/form-suggestions` - Get form filling suggestions
+- `GET /api/smart-recommendations/health` - Check AI service health
+- `GET /api/smart-recommendations/capabilities` - Get system capabilities
 
-### Create a Room
-```bash
-curl -X POST http://localhost:8080/api/salles \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{
-    "nom": "Salle A101",
-    "capacite": 30,
-    "type": "salle de cours"
-  }'
+## 🧠 AI-Powered Features
+
+### Smart Room Recommendations
+The system uses Google's Gemini API to provide intelligent room suggestions based on:
+
+- **Capacity Analysis**: Optimal room size matching
+- **Location Preferences**: Building and floor preferences
+- **Activity Type**: Room type compatibility
+- **Availability**: Real-time conflict detection
+- **Accessibility**: Special requirements handling
+
+### Example AI Recommendation Request
+```json
+{
+  "date": "2024-01-15",
+  "heureDebut": "09:00",
+  "heureFin": "11:00",
+  "typeActivite": "Cours magistral",
+  "capaciteRequise": 25,
+  "capaciteMinAcceptable": 20,
+  "capaciteMaxAcceptable": 35,
+  "descriptionActivite": "Cours de mathématiques avancées",
+  "blocPrefere": "Bloc A",
+  "etagePrefere": "2ème étage",
+  "typeSallePrefere": "Salle de cours",
+  "accessibiliteRequise": false,
+  "notesSpeciales": "Projecteur requis",
+  "flexibleHoraire": true,
+  "margeHoraire": 60,
+  "prioriteCapacite": true,
+  "prioriteLocalisation": false,
+  "prioriteHoraire": false
+}
 ```
 
-### Create an Assignment
-```bash
-curl -X POST http://localhost:8080/api/affectations \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{
-    "date": "2024-01-15",
-    "heuredebut": "09:00:00",
-    "heurefin": "11:00:00",
-    "typeactivite": "Cours",
-    "salle": {
-      "id": 1
+### AI Response Structure
+```json
+{
+  "recommendations": [
+    {
+      "salleId": 1,
+      "nomSalle": "Salle A101",
+      "score": 95.5,
+      "capacite": 30,
+      "blocNom": "Bloc A",
+      "etageNumero": "2ème étage",
+      "availabilityStatus": "available",
+      "reasoning": "Optimal capacity match with preferred location",
+      "isOptimal": true,
+      "whyOptimal": "Perfect capacity match and location preference",
+      "advantages": ["Optimal capacity", "Preferred location", "Available"],
+      "considerations": ["Requires projector setup"]
     }
-  }'
+  ],
+  "aiReasoning": "Analysis based on capacity optimization and location preferences",
+  "optimalStrategy": "Prioritize capacity matching with location preferences",
+  "hasConflicts": false,
+  "alternativeTimeSlots": [],
+  "confidenceLevel": "high"
+}
 ```
 
-## Security Features
+## 🔒 Security Features
 
-- **Password Hashing**: All passwords are hashed using BCrypt
-- **JWT Tokens**: Stateless authentication with JWT tokens
-- **CORS Support**: Configured for frontend integration
-- **Role-based Access**: Support for "admin" and "user" roles
-- **Token Expiration**: JWT tokens expire after 24 hours
+- **JWT Authentication**: Stateless authentication with token expiration
+- **Password Hashing**: BCrypt encryption for secure password storage
+- **Role-based Access**: Support for admin and user roles
+- **CORS Configuration**: Secure cross-origin resource sharing
+- **Input Validation**: Comprehensive request validation
+- **Error Handling**: Secure error responses without sensitive information
 
-## Running the Application
 
-1. **Prerequisites**:
-   - Java 17 or higher
-   - PostgreSQL database
-   - Gradle
 
-2. **Database Setup**:
-   - Create a PostgreSQL database named `affectation_salles`
-   - Update `application.properties` with your database credentials
+## 🚀 Deployment
 
-3. **Run the Application**:
-   ```bash
-   ./gradlew bootRun
-   ```
+### Docker Deployment
+```dockerfile
+FROM openjdk:17-jdk-slim
+COPY build/libs/affectation-des-salles-*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+```
 
-4. **Test the Application**:
-   - Test database connection: `GET http://localhost:8080/api/salles/test`
-   - Test authentication: `GET http://localhost:8080/api/auth/test`
+### Production Configuration
+```properties
+# Production settings
+spring.profiles.active=prod
+spring.jpa.hibernate.ddl-auto=validate
+logging.level.root=WARN
+server.port=8080
+```
 
-## Frontend Integration
+## 🤝 Contributing
 
-The backend is configured for easy integration with ReactJS frontends:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-- CORS is enabled for all origins
-- JWT tokens are returned in a frontend-friendly format
-- All endpoints return JSON responses
-- Error messages are user-friendly
 
-### Frontend Authentication Flow
 
-1. **Registration**: Call `POST /api/auth/signup` with user details
-2. **Login**: Call `POST /api/auth/login` with credentials
-3. **Store Token**: Save the JWT token in localStorage or state
-4. **API Calls**: Include the token in the Authorization header for all subsequent requests
+## 🙏 Acknowledgments
 
-## Development Notes
+- [Spring Boot](https://spring.io/projects/spring-boot) - The web framework used
+- [Google Gemini AI](https://ai.google.dev/) - AI-powered recommendations
+- [PostgreSQL](https://www.postgresql.org/) - Database system
+- [JWT](https://jwt.io/) - Authentication tokens
 
-- The application uses Spring Boot 3.5.3
-- JPA/Hibernate for database operations
-- Spring Security for authentication and authorization
-- JWT for stateless authentication
-- BCrypt for password hashing
-- PostgreSQL as the primary database
+
+---
+
+**Made with ❤️ for intelligent room management**
